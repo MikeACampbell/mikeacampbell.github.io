@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<style>
+body 
+{
+    background-color: lightblue;
+}
+
+h1 
+{
+    color: white;
+    text-align: center;
+
+}
+
+h2
+{
+    color: white;
+    text-align: center;
+}
+
+
+
+p.linkToIndex
+{
+	font-family: verdana; 
+	text-align: center;
+	font-size: 12px;
+}
+
+.options
+{
+font-family: verdana; 
+	text-align: center;
+	font-size: 12px;
+	padding-bottom: 10px;
+
+}
+
+.output
+{   
+	margin: auto;
+    width: 20%;
+    padding: 10px;
+	font-size: 13px;
+	font-family: verdana; 
+	border: 1px solid black;
+}
+
+.outputJSON
+{   
+	margin: auto;
+    width: 20%;
+    padding: 10px;
+	font-size: 13px;
+	font-family: verdana; 
+}
+
+.inputFile
+{
+	width: 25%;
+	font-family: verdana;
+
+}
+
+.submit
+{
+
+font-family: verdana;
+
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $.getJSON("test.js", function(result){
+            $.each(result, function(i, field){
+                $("output").append(field + " ");
+            });
+        });
+    });
+});
+
+
+}
+</script>
+
+<title>Ajax Assignment</title>
+
+</head>
+
+<body>
+
+<h2>Ajax Json Loader</h2>
+
+<div class ="options">
+<button type="button" id = "russia">Load</button>
+</div>
+
+<div id="output" class="output">
+</div>
+
+<hr>
+<p class="linkToIndex">
+<a href= "http://localhost/~mac4676/index.html">CS213 Assignments</a>
+</p>
+
+
+</body>
+</html>
