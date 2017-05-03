@@ -84,7 +84,7 @@ xhttp.open("GET", fileName, true);
 	  var myText = JSON.parse(this.responseText);
 		}
 	};	
-	document.getElementById("outputJSON").innerHTML = myText;
+	document.getElementById("outputJSON").innerHTML = myText.one + ", " + myText.two + ", " + myText.three;
 xhttp.send();
 
 }
