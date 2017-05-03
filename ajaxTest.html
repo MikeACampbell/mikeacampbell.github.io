@@ -74,59 +74,14 @@ font-family: verdana;
 </style>
 
 <script>
-function loadDoc(eleID) {
-   var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      
-	  document.getElementById("output").innerHTML =
-      JSON.parse(httpRequest.responseText);
-    }
-  };
-
-  if (eleID == 'russia')
-  {
-   xhttp.open("GET", "test.json", true);
-   xhttp.send();  	
-  };
-  
-   if (eleID == "canada")
-  {
-   xhttp.open("GET", "http://localhost/~ercanbracks/canada.txt", true);
-   xhttp.send();  	
-  };
-   if (eleID == "mexico")
-  {
-   xhttp.open("GET", "http://localhost/~ercanbracks/mexico.txt", true);
-   xhttp.send();  	
-  };
-   if (eleID == "usa")
-  {
-   xhttp.open("GET", "http://localhost/~ercanbracks/usa.txt", true);
-   xhttp.send();  	
-  };
-
-}
-
 function loadJson(){
-var fileName = document.forms["frm1"]["filenameInput"].value;
+var fileName = "test.json";
 
 var xhttp = new XMLHttpRequest();
 xhttp.open("GET", fileName, true);
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-	  var myText = JSON.parse(this.responseText);
-	  var list = "<table border = '1'><tr><th>Name</th><th>Address</th><th>Major</th><th>GPA</th></tr>\n";
-
-                 for (var i = 0; i < myText.students.length; i++)
-                  {
-                       list  = list + "<tr><td>" + myText.students[i].first + " " + myText.students[i].last + "</td>" +
-                                "<td>" + myText.students[i].address.city + ", " + myText.students[i].address.state + " " +
-                                myText.students[i].address.zip + "</td>" +
-                                "<td>" + myText.students[i].major + "</td>" +
-                                "<td>" + myText.students[i].gpa + "</td></tr>\n";
-                   }
-                   document.getElementById("outputJSON").innerHTML = list;
+	  var myText = JSON.parse(this.responseText);xs
 		}
 	};	
 xhttp.send();
@@ -141,19 +96,6 @@ xhttp.send();
 
 <body>
 
-<h1>Largest Cities</h1>
-<h2>Select a country to see a list of the largest cities in the country.</h2>
-
-<div class ="options">
-<button type="button" id = "russia" onclick= "loadDoc(this.id)">Russia</button>
-<button type="button" id = "canada" onclick= "loadDoc(this.id)">Canada</button>
-<button type="button" id = "mexico" onclick= "loadDoc(this.id)">Mexico</button>
-<button type="button" id = "usa" onclick= "loadDoc(this.id)">USA</button>
-</div>
-
-<div id="output" class="output">
-</div>
-
 <hr>
 
 <h1>JSON Parser</h1>
@@ -162,7 +104,6 @@ xhttp.send();
 
 <form id="frm1" class="fileInput">
 
-		Filename or URL:  <input type="text" id="filenameInput" name="filename" class="inputFile">
 			
 		<button type="button" class = "submit" onclick="loadJson()">Load</button>
 
