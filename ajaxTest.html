@@ -82,7 +82,7 @@ xhttp.open("GET", fileName, true);
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 	  var myText = JSON.parse(this.responseText);
-	  document.getElementById("outputJSON").innerHTML = myText.[0] + ", " + myText.two + ", " + myText.three;
+	  document.getElementById("outputJSON").innerHTML = myText.one + ", " + myText.two + ", " + myText.three;
 		}
 	};	
 xhttp.send();
