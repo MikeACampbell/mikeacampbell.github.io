@@ -94,10 +94,9 @@ function loadDoc(eleID) {
 }
 
 function loadJson(){
-var fileName = document.forms["frm1"]["filenameInput"].value;
 
 var xhttp = new XMLHttpRequest();
-xhttp.open("GET", fileName, true);
+xhttp.open("GET", "schoolInfo.json", true);
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 	  var myText = JSON.parse(this.responseText);
@@ -126,7 +125,6 @@ xhttp.send();
 
 <body>
 
-<h1>Largest Cities</h1>
 <h2>This loads the contents of a .txt document</h2>
 
 <div class ="options">
@@ -143,13 +141,9 @@ xhttp.send();
 
 <div class = "options">
 
-<form id="frm1" class="fileInput">
+<button type="button" id = "schoolInfo.json" onclick= "loadJson()">Load JSON</button>
 
-		Filename or URL:  <input type="text" id="filenameInput" name="filename" class="inputFile">
-			
-		<button type="button" class = "submit" onclick="loadJson()">Load</button>
 
-</form>
 </div>
 
 <div id="outputJSON" class="outputJSON">
