@@ -2,31 +2,31 @@
 [
 {"first": "Alexander",
   "last": "James",
-  "address": [ { "city": "Houston", "state": "Texas" , "zip": 77010 }],
+  "address": { "city": "Houston", "state": "Texas" , "zip": 77010 },
   "major": "Computer Science",
   "gpa": 3.6},
   
  {"first": "Joseph",
   "last": "Jones",
-  "address": [ { "city": "Sugar Land", "state": "Texas" , "zip": 77408 }],
+  "address": { "city": "Sugar Land", "state": "Texas" , "zip": 77408 },
   "major": "Biology",
   "gpa": 4.0},
   
  {"first": "Sally",
   "last": "Lee",
-  "address": [ { "city": "Pearland", "state": "Texas" , "zip": 77478 }],
+  "address": { "city": "Pearland", "state": "Texas" , "zip": 77478 },
   "major": "Software Engineering",
   "gpa": 3.8},
   
  {"first": "Sarah",
   "last": "Green",
-  "address": [ { "city": "Houston", "state": "Texas" , "zip": 770180 }],
+  "address": { "city": "Houston", "state": "Texas" , "zip": 770180 },
   "major": "Computer Information Techonolgy",
   "gpa": 3.0},
   
  {"first": "Jordan",
   "last": "Major",
-  "address": [ { "city": "Houston", "state": "Texas" , "zip": 77478 }],
+  "address": { "city": "Houston", "state": "Texas" , "zip": 77478 },
   "major": "Computer Science",
   "gpa": 3.6}
  ]
