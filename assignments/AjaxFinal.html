@@ -93,7 +93,7 @@ function loadDoc(eleID) {
 
 }
 
-function loadJson(){
+function parseJson(){
 
 var xhttp = new XMLHttpRequest();
 xhttp.open("GET", "schoolInfo.json", true);
@@ -116,6 +116,21 @@ xhttp.open("GET", "schoolInfo.json", true);
 xhttp.send();
 
 }
+
+function parseJson(){
+
+var xhttp = new XMLHttpRequest();
+xhttp.open("GET", "schoolInfo.json", true);
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	  var myText = JSON.stringify(this.responseText);
+
+xhttp.send();
+
+}
+
+
+
 
 </script>
 
@@ -141,8 +156,8 @@ xhttp.send();
 
 <div class = "options">
 
-<button type="button" id = "schoolInfo.json" onclick= "loadJson()">Load JSON</button>
-
+<button type="button" id = "schoolInfo.json" onclick= "parseJson()">Parse JSON</button>
+<button type="button" id = "schoolInfo.json" onclick= "stringJson()">Stringify JSON</button>
 
 </div>
 
