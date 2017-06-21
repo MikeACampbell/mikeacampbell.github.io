@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<style>
+body 
+{
+    background-color: lightblue;
+}
+
+h1 
+{
+    color: white;
+    text-align: center;
+}
+
+div.main
+{  
+    font-family: verdana;
+    font-size: 15px;
+	position: relative;
+    bottom: 50%;
+    left: 40%;
+}
+
+p.button
+{
+
+}
+
+
+.inputAPR
+{
+	position: relative;
+	left: 30px;
+	font-family: verdana;
+}
+
+.inputTerm
+{
+	position: relative;
+	left: 165px;
+	font-family: verdana;
+}
+
+
+.inputLoanAmmount
+{
+	position: relative;
+	left: 130px;
+	font-family: verdana;
+
+}
+
+.output
+{
+	position: relative;
+	left: 100px;
+	font-family: verdana; 
+}
+
+.output::before
+{
+	content: '$ ';
+}
+
+p.linkToIndex
+{
+	font-family: verdana; 
+	text-align: center;
+	font-size: 12px;
+}
+
+div.test
+{
+	width: 300px;
+    height: 100px;
+    background-color: red;
+    border: 1px solid black;
+
+}
+
+
+</style>
+<title>CSS3 Transform</title>
+<script>
+
+function rotate()
+{
+
+document.getElementById("box").style.color = "blue";
+document.getElementById("box").style.webkitTransform = "blue";
+document.getElementById("box").style.msTransform = "blue";
+
+}
+
+function rotate3D()
+{
+document.getElementById("box").style.color = "blue";
+document.getElementById("box").style.webkitTransform = "blue";
+document.getElementById("box").style.msTransform = "blue";
+
+}
+
+
+
+function translator()
+{
+
+document.getElementById("box").style.transform = "translate(100px, 50px)";
+document.getElementById("box").style.webkitTransform = "translate(100px, 50px)";
+document.getElementById("box").style.msTransform = "translate(100px, 50px)";
+
+}
+
+
+
+
+
+
+</script>
+</head>
+<body>
+<div class="main">
+<br>
+		<div id="box">
+		<p>This is a box</p>
+		</div>
+		<br><br><br><br>
+		<p class="button">
+			<button type="button" onclick="rotate()">Change to Blue</button>
+			<button type="button" onclick="rotate3D()">Change font</button>
+			<button type="button" onclick="translator()">Translate</button>
+			
+			<!--
+			<form>
+			ScaleX: <input type="Number" name="fname"><br>
+			ScaleY: <input type="Number" name="fname"><br>
+			SkewX:  <input type="Number" name="fname"><br>
+			SkewY:  <input type="Number" name="fname"><br>
+			TranslateX: <input type="Number" name="fname"><br>
+			TranslateY: <input type="Number" name="fname"><br>
+			</form>
+			-->
+			<button type="button" onclick="matrix()">Matrix</button>
+			<button type="button" onclick="reset()">Reset</button>
+			
+			<br>
+			
+			
+
+		</p>	
+</div>
+
+
+<hr>
+<p class="linkToIndex">
+<a href= "http://157.201.194.254/~cam08011/index.html">CS213 Assignments</a>
+</p>
+
+
+</body>
+</html>

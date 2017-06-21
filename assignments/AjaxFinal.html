@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<style>
+body 
+{
+    background-color: lightblue;
+}
+
+h1 
+{
+    color: white;
+    text-align: center;
+
+}
+
+h2
+{
+    color: white;
+    text-align: center;
+}
+
+
+
+p.linkToIndex
+{
+	font-family: verdana; 
+	text-align: center;
+	font-size: 12px;
+}
+
+.options
+{
+font-family: verdana; 
+	text-align: center;
+	font-size: 12px;
+	padding-bottom: 10px;
+
+}
+
+.output
+{   
+	margin: auto;
+    width: 20%;
+    padding: 10px;
+	font-size: 13px;
+	font-family: verdana; 
+	border: 1px solid black;
+}
+
+.outputJSON
+{   
+	margin: auto;
+    width: 20%;
+    padding: 10px;
+	font-size: 13px;
+	font-family: verdana; 
+}
+
+.inputFile
+{
+	width: 25%;
+	font-family: verdana;
+
+}
+
+.submit
+{
+
+font-family: verdana;
+
+}
+</style>
+
+<script>
+function loadDoc(eleID) {
+   var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      
+	  document.getElementById("output").innerHTML =
+      this.responseText;
+    }
+  };
+
+  if (eleID == 'russia')
+  {
+   xhttp.open("GET", "http://localhost/~ercanbracks/russia.txt", true);
+   xhttp.send();  	
+  };
+  
+
+}
+
+function loadJson(){
+var fileName = document.forms["frm1"]["filenameInput"].value;
+
+var xhttp = new XMLHttpRequest();
+xhttp.open("GET", fileName, true);
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	  var myText = JSON.parse(this.responseText);
+	  var list = "<table border = '1'><tr><th>Name</th><th>Address</th><th>Major</th><th>GPA</th></tr>\n";
+
+                 for (var i = 0; i < myText.students.length; i++)
+                  {
+                       list  = list + "<tr><td>" + myText.students[i].first + " " + myText.students[i].last + "</td>" +
+                                "<td>" + myText.students[i].address.city + ", " + myText.students[i].address.state + " " +
+                                myText.students[i].address.zip + "</td>" +
+                                "<td>" + myText.students[i].major + "</td>" +
+                                "<td>" + myText.students[i].gpa + "</td></tr>\n";
+                   }
+                   document.getElementById("outputJSON").innerHTML = list;
+		}
+	};	
+xhttp.send();
+
+}
+
+</script>
+
+<title>Ajax Assignment</title>
+
+</head>
+
+<body>
+
+<h1>Largest Cities</h1>
+<h2>Select a country to see a list of the largest cities in the country.</h2>
+
+<div class ="options">
+<button type="button" id = "russia" onclick= "loadDoc(this.id)">Russia</button>
+
+</div>
+
+<div id="output" class="output">
+</div>
+
+<hr>
+
+<h1>JSON Parser</h1>
+
+<div class = "options">
+
+<form id="frm1" class="fileInput">
+
+		Filename or URL:  <input type="text" id="filenameInput" name="filename" class="inputFile">
+			
+		<button type="button" class = "submit" onclick="loadJson()">Load</button>
+
+</form>
+</div>
+
+<div id="outputJSON" class="outputJSON">
+</div>
+
+<hr>
+
+
+</body>
+</html>
