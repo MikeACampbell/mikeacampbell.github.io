@@ -119,18 +119,16 @@ xhttp.send();
 
 function stringJson(){
 
-	  var obj = 
- {"first": "Alexander",
-  "last": "James",
-  "address": { "city": "Houston", "state": "Texas" , "zip": 77010 },
-  "major": "Computer Science",
-  "gpa": 3.6};
-  var myJSON = JSON.stringify(obj);
+var xhttp = new XMLHttpRequest();
+xhttp.open("GET", "schoolInfo.json", true);
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	  var myText = 
  document.getElementById("outputJSON").innerHTML = myText;
 
 }
 };
-
+xhttp.send();
 }
 
 
