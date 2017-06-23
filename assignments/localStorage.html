@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<style>
+body 
+{
+    background-color: lightblue;
+}
+
+h1 
+{
+    color: white;
+}
+
+div.main
+{  
+    font-family: verdana;
+    font-size: 15px;
+
+    bottom: 50%;
+    left: 40%;
+}
+
+
+</style>
+<title>Local Storage</title>
+   <script>
+        function localCounter() {
+            if(typeof(Storage) !== "undefined") {
+                if (localStorage.count) {
+                    localStorage.count = Number(localStorage.count)+1;
+                } else {
+                    localStorage.count = 1;
+                }
+                document.getElementById("localResult").innerHTML = "You have clicked the button " + localStorage.count + " time(s).";
+            } else {
+                document.getElementById("localResult").innerHTML = "Sorry, your browser does not support web storage...";
+            }
+        }
+        function sessionCounter() {
+            if(typeof(Storage) !== "undefined") {
+                if (sessionStorage.count) {
+                    sessionStorage.count = Number(sessionStorage.count)+1;
+                } else {
+                    sessionStorage.count = 1;
+                }
+                document.getElementById("sessionResult").innerHTML = "You have clicked the button " + sessionStorage.count + " time(s) in this session.";
+            } else {
+                document.getElementById("sessionResult").innerHTML = "Sorry, your browser does not support web storage...";
+            }
+        }
+        </script>
+		
+		<body>
+		<div class="main">        
+        <h1>Local Storage API</h1>
+		<hr></hr>
+        <h3>A Simple example of local storage</h3>
+        <p><button onclick="localCounter()" type="button">Click</button></p>
+        <div id="localResult"></div>
+        <p>Click the button to see the counter increase.</p>
+        <p>This counter shouldn't reset, even if you close the page.</p>
+        <hr></hr>
+        <h3>This is an example of session storage</h3>
+        <p><button onclick="sessionCounter()" type="button">Click</button></p>
+        <div id="sessionResult"></div>
+        <p>Click the button to see the counter increase.</p>
+        <p>This counter should reset if you close then reopen the page.</p>
+    </div>
+
+	<hr></hr>
+	<p class="linkToIndex">
+<a href= "http://localhost/index.html">CS213 Assignments</a>
+</p>
+
+</body></html>
+		

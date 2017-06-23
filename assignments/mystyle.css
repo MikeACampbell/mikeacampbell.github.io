@@ -8,6 +8,12 @@ p.text
 
 }
 
+h1 
+{
+	text-align: center;
+    color: white;
+}
+
 img.imageOfMe
 {
 text-align:center;

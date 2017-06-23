@@ -84,16 +84,15 @@ function loadDoc(eleID) {
     }
   };
 
-  if (eleID == 'russia')
-  {
-   xhttp.open("GET", "https://mikeacampbell.github.io/assignments/russia.txt", true);
+
+   xhttp.open("GET", "https://mikeacampbell.github.io/assignments/testLoad.txt", true);
    xhttp.send();  	
-  };
   
 
 }
 
 function parseJson(){
+//So this is parasing a JSON, plus a little bit of using a javascript object to interate through the JSON file and 
 
 var xhttp = new XMLHttpRequest();
 xhttp.open("GET", "schoolInfo.json", true);
@@ -144,7 +143,7 @@ xhttp.send();
 <h2>This loads the contents of a .txt document</h2>
 
 <div class ="options">
-<button type="button" id = "russia" onclick= "loadDoc(this.id)">Load</button>
+<button type="button" id = "load" onclick= "loadDoc(this.id)">Load</button>
 
 </div>
 
@@ -165,8 +164,10 @@ xhttp.send();
 <div id="outputJSON" class="outputJSON">
 </div>
 
-<hr>
-
+<hr></hr>
+<p class="linkToIndex">
+<a href= "http://localhost/index.html">CS213 Assignments</a>
+</p>
 
 </body>
 </html>
