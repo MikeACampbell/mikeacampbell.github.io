@@ -89,10 +89,7 @@ function loadFromStorage()
 			      $( ".someBox" ).empty(); //I tried removeChild again, but couldn't seem to get it to work. So I'm using Jquery to just empty the canvases. 
 				  
 				   var loadedData = JSON.parse(localStorage["savedCanvas"]);
-				   
-				   
-				   Alert(JSON.parse(localStorage["savedCanvas"]);
-				   
+				   canvasArray = []; //Empty array just to be safe.
 					idCount = 1;
 			   for (var counter = 1; counter < loadedData.length; counter++)
 			   {	
