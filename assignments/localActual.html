@@ -72,9 +72,7 @@ else
 function saveToStorage()
 {
 if(typeof(Storage) !== "undefined") {
-               
 			   localStorage["savedCanvas"] = JSON.stringify(canvasArray);
-			   
             } else {
 					alert("Your browser doesn't support localStorage");
             
