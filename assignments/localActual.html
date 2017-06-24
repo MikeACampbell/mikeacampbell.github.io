@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+  <head>
+  <style>
+body 
+{
+    background-color: lightblue;
+}
+
+h1 
+{
+    color: white;
+    text-align: center;
+}
+
+div.main
+{  
+    font-family: verdana;
+    font-size: 15px;
+	position: relative;
+    bottom: 50%;
+    left: 40%;
+}
+
+
+canvas.canvasClass{
+
+border:1px solid #000000;
+background: white;
+}
+
+
+</style>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script> 
+<script>
+
+var idCount = 1; //This is likely not the best way, but it allows me to change the id of the dynamic canvas
+var canvasArray = new Array();
+var indvidualCanvas;
+function canvasCreator(){
+
+if (document.getElementById("text").value != ""){
+
+    var canv = document.createElement("canvas");
+    canv.setAttribute('width', 300);
+    canv.setAttribute('height', 100);
+    canv.setAttribute('id', idCount);
+	canv.setAttribute('class', 'canvasClass');
+
+	var temp = document.getElementById("someBox");
+    temp.appendChild(canv);
+	
+	var text = document.getElementById("text").value;
+	var c = document.getElementById(idCount);
+	var ctx = c.getContext("2d"); 
+	ctx.font = "30px Arial";
+	ctx.strokeText(text,10,50);
+	document.getElementById(idCount).addEventListener('click',function(evt){var parent = document.getElementById("someBox"); var child = document.getElementById(this.id); canvasArray.splice(this.id, 1); parent.removeChild(child);
+},false);
+	indvidualCanvas = {text: text, read: "yes"};
+	canvasArray[idCount] = indvidualCanvas;
+	idCount++;	
+}
+else
+{
+
+	alert("Field Can't Be empty");
+}
+
+}
+
+function saveToStorage()
+{
+if(typeof(Storage) !== "undefined") {
+               
+			   localStorage["savedCanvas"] = JSON.stringify(canvasArray);
+			   
+            } else {
+					alert("Your browser doesn't support localStorage");
+            
+			}
+			
+        }
+
+
+function loadFromStorage()
+{
+
+            if(typeof(Storage) !== "undefined") {
+
+			      $( ".someBox" ).empty(); //I tried removeChild again, but couldn't seem to get it to work. So I'm using Jquery to just empty the canvases. 
+				  
+				   var loadedData = JSON.parse(localStorage["savedCanvas"]);
+					idCount = 0;
+			   for (var counter = 1; counter < loadedData.length; counter++)
+			   {	
+					var canv = document.createElement("canvas");
+					canv.setAttribute('width', 300);
+					canv.setAttribute('height', 100);
+					canv.setAttribute('id', idCount);
+					canv.setAttribute('class', 'canvasClass');
+
+					var temp = document.getElementById("someBox");
+					temp.appendChild(canv);
+	
+					var text = loadedData[counter].text;
+					var c = document.getElementById(idCount);
+					var ctx = c.getContext("2d"); 
+					ctx.font = "30px Arial";
+					ctx.strokeText(text,10,50);
+					document.getElementById(idCount).addEventListener('click',function(evt){var parent = document.getElementById("someBox"); var child = document.getElementById(this.id); canvasArray.splice(this.id, 1); parent.removeChild(child);},false);
+					indvidualCanvas = {text: text, read: "yes"};
+					canvasArray[idCount] = indvidualCanvas;
+					idCount++;	
+			   
+			   
+			   }
+			   
+			   
+			   
+            } else {
+                
+            }
+        }
+
+
+
+
+</script>
+
+
+
+  <link rel="stylesheet" href="mystyle.css">
+   <meta charset = "utf-8" />
+    <title>Local Storage in use</title>
+  </head> 
+  <body>
+  <h1>Local Storage</h1>
+  <hr></hr>
+  <p>Input text is rendered as a cavans HTML5 emelment added to the doucment via. DOM manipulation. Click on cavases to delete them. Click on save to save current canvases to localStorage and load to load from Local Storage</p>
+  
+  <p>Text to Canvas: <input id="text" name="text" onblur="this.style.borderColor = 'blue'" onfocus="this.style.borderColor = 'red'"><button type="button" onclick="canvasCreator()">Create Canvas</button></p>
+<p><button type="button" onclick="saveToStorage()">Save</button> <button type="button" onclick="loadFromStorage()">Load</button></p>
+
+  <div class="storageOutput" id="storageOutput"></div>
+  <div class="someBox" id="someBox"></div>
+<hr></hr>
+
+<p class="linkToIndex">
+<a href= "https://mikeacampbell.github.io/assignments/index.html">Link to Index</a>
+</p>
+
+  </body>
+  </html>
