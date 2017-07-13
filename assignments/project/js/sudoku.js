@@ -35,7 +35,15 @@ var texts = {
             $("#options > button").prop("disabled", !1);
             this.button.undo.bind("click", a.undo);
             this.undoToggle();
-            this.button.restart.bind("click", $.proxy(a, "restart"));
+            this.button.restart.bind("click", function() {
+            this.reset();
+            board.arr = $.extend(!0, [], board.arr_original);
+            board.cells.find("> div span:first").empty();
+            board.numberOfMoves = utility.countEmtpyCells()
+        },);
+			
+			
+			
             this.button.newGame.bind("click", $.proxy(a, "newGame"));
             this.button.Import.bind("click", function() {
                 a.Import()
@@ -43,7 +51,7 @@ var texts = {
             this.button.Export.bind("click", function() {
                 a.Export()
             });
-            this.button.share.bind("click", $.proxy(a, "share"));
+            //this.button.share.bind("click", $.proxy(a, "share"));
             this.button.notes.bind("click", function() {
                 a.candidates.set()
             });
