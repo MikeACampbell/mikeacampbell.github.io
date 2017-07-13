@@ -1,23 +1,166 @@
-var dlx = {dlx_cover:function(r){
-	r.right.left = r.left, r.left.right = r.right;
-	for(var l = r.down; l != r; l = l.down)
-		for(var t = l.right; t != l; t = t.right)
-			t.down.up = t.up,t.up.down=t.down,t.column.size--}, dlx_uncover:function(r)
-			{for(var l=r.up;l!=r;l=l.up)
-				for(var t=l.left;t!=l;t=t.left)
-					t.column.size++,t.down.up=t , t.up.down=t; r.right.left=r, r.left.right=r}, dlx_search:function(r,l,t,e,o)
-					{var n=this;if(r.right==r)return e.push(l.slice(0)),e.length>=o?e:null;
-					for(var f=null,i=99999,h=r.right;h!=r;h=h.right){
-						if(0==h.size)return null;h.size<i&&(i=h.size,f=h)}n.dlx_cover(f);
-						for(var u=f.down;u!=f;u=u.down)
-						{l[t]=u.row;for(var h=u.right;h!=u;h=h.right)
-							n.dlx_cover(h.column);var i=n.dlx_search(r,l,t+1,e,o);
-						if(null!=i)
-							return i;
-						for(var h=u.left;h!=u;h=h.left)n.dlx_uncover(h.column)}
-						return n.dlx_uncover(f),null},dlx_solve:function(r,l,t)
-						{for(var e=new Array(r[0].length),o=e.length,n=0;n<o;n++)e[n]={};
-						for(var n=0;n<o;n++)e[n].index=n,e[n].up=e[n],e[n].down=e[n],n>=l?(n-1>=l&&(e[n].left=e[n-1]),n+1<o&&(e[n].right=e[n+1])):(e[n].left=e[n],e[n].right=e[n]),e[n].size=0;
-						for(var n=0,f=r.length;n<f;n++)
-							for(var i=null,h=0,u=r[n].length;h<u;h++)
-								if(r[n][h]){var a={};a.row=n,a.column=e[h],a.up=e[h].up,a.down=e[h],i?(a.left=i,a.right=i.right,i.right.left=a,i.right=a):(a.left=a,a.right=a),e[h].up.down=a,e[h].up=a,e[h].size++,i=a}var v={},s=[];return v.right=e[l],v.left=e[o-1],e[l].left=v,e[o-1].right=v,this.dlx_search(v,[],0,s,t),s},solve:function(r){for(var l=[],t=[],e=0;e<9;e++)for(var o=0;o<9;o++){var n=r[e][o]-1;if(n>=0){var f=new Array(324);f[9*e+o]=1,f[81+9*e+n]=1,f[162+9*o+n]=1,f[243+9*(3*Math.floor(e/3)+Math.floor(o/3))+n]=1,l.push(f),t.push({row:e,col:o,n:n+1})}else for(var i=0;i<9;i++){var f=new Array(324);f[9*e+o]=1,f[81+9*e+i]=1,f[162+9*o+i]=1,f[243+9*(3*Math.floor(e/3)+Math.floor(o/3))+i]=1,l.push(f),t.push({row:e,col:o,n:i+1})}}var h=this.dlx_solve(l,0,2);if(h.length>0){for(var u=h[0],e=0;e<u.length;e++)r[t[u[e]].row][t[u[e]].col]=t[u[e]].n;return h.length}return 0}};self.addEventListener("message",function(r){var l=dlx.solve(r.data);self.postMessage(l)},!1);
+var dlx = {
+	dlx_cover : function (c){
+		c.right.left = c.left;
+		c.left.right = c.right;
+		for (var i = c.down; i != c; i = i.down) {
+			for (var j = i.right; j != i; j = j.right) {
+				j.down.up = j.up;
+				j.up.down = j.down;
+				j.column.size--;
+			}
+		}
+	},
+
+	dlx_uncover : function (c){
+		for (var i = c.up; i != c; i = i.up) {
+			for (var j = i.left; j != i; j = j.left) {
+				j.column.size++;
+				j.down.up = j;
+				j.up.down = j;
+			}
+		}
+		c.right.left = c;
+		c.left.right = c;
+	},
+
+	dlx_search : function (head, solution, k, solutions, maxsolutions){
+		var that = this;
+		if (head.right == head) {
+			solutions.push(solution.slice(0));
+			if (solutions.length >= maxsolutions) {
+				return solutions;
+			}
+			return null;
+		}
+		var c = null, s = 99999;
+		
+		for (var j = head.right; j != head; j = j.right) {
+			if (j.size == 0) {
+				return null;
+			}
+			if (j.size < s) {
+				s = j.size;
+				c = j;
+			}
+		}
+		that.dlx_cover(c);
+		for (var r = c.down; r != c; r = r.down) {
+			solution[k] = r.row;
+			for (var j = r.right; j != r; j = j.right) {
+				that.dlx_cover(j.column);
+			}
+			var s = that.dlx_search(head, solution, k+1, solutions, maxsolutions);
+			if (s != null) {
+				return s;
+			}
+			for (var j = r.left; j != r; j = j.left) {
+				that.dlx_uncover(j.column);
+			}
+		}
+		that.dlx_uncover(c);
+		return null;
+	},
+
+	dlx_solve : function (matrix, skip, maxsolutions){
+		var columns = new Array(matrix[0].length);
+		var col_len = columns.length;
+		
+		for (var i = 0; i < col_len; i++) {
+			columns[i] = {};
+		}
+		for (var i = 0; i < col_len; i++) {
+			columns[i].index = i;
+			columns[i].up = columns[i];
+			columns[i].down = columns[i];
+			if (i >= skip) {
+				if (i-1 >= skip) {
+					columns[i].left = columns[i-1];
+				}
+				if (i+1 < col_len) {
+					columns[i].right = columns[i+1];
+				}
+			} else {
+				columns[i].left = columns[i];
+				columns[i].right = columns[i];
+			}
+			columns[i].size = 0;
+		}
+		for (var i=0, matrix_len = matrix.length; i < matrix_len; i++) {
+			var last = null;
+			for (var j=0, matrix_i_len = matrix[i].length; j < matrix_i_len; j++) {
+				if (matrix[i][j]) {
+					var node = {};
+					node.row = i;
+					node.column = columns[j];
+					node.up = columns[j].up;
+					node.down = columns[j];
+					if (last) {
+						node.left = last;
+						node.right = last.right;
+						last.right.left = node;
+						last.right = node;
+					} else {
+						node.left = node;
+						node.right = node;
+					}
+					columns[j].up.down = node;
+					columns[j].up = node;
+					columns[j].size++;
+					last = node;
+				}
+			}
+		}
+		var head = {},
+			solutions = [];
+		head.right = columns[skip];
+		head.left = columns[col_len-1];
+		columns[skip].left = head;
+		columns[col_len-1].right = head;
+		this.dlx_search(head, [], 0, solutions, maxsolutions);
+		return solutions;
+	},
+
+	solve : function(grid){
+		var mat = [];
+		var rinfo = [];
+		for (var i = 0; i < 9; i++) {
+			for (var j = 0; j < 9; j++) {
+				var g = grid[i][j] - 1;
+				if (g >= 0) {
+					var row = new Array(324);
+					row[i*9+j] = 1;
+					row[9*9+i*9+g] = 1;
+					row[9*9*2+j*9+g] = 1;
+					row[9*9*3+(Math.floor(i/3)*3+Math.floor(j/3))*9+g] = 1;
+					mat.push(row);
+					rinfo.push({'row': i, 'col': j, 'n': g+1});
+				} else {
+					for (var n = 0; n < 9; n++) {
+						var row = new Array(324);
+						row[i*9+j] = 1;
+						row[9*9+i*9+n] = 1;
+						row[9*9*2+j*9+n] = 1;
+						row[9*9*3+(Math.floor(i/3)*3+Math.floor(j/3))*9+n] = 1;
+						mat.push(row);
+						rinfo.push({'row': i, 'col': j, 'n': n+1});
+					}
+				}
+			}
+		}
+		
+		var solutions = this.dlx_solve(mat, 0, 2);
+		if (solutions.length > 0) {
+			var r = solutions[0];
+			for (var i = 0; i < r.length; i++) {
+				grid[rinfo[r[i]]['row']][rinfo[r[i]]['col']] = rinfo[r[i]]['n'];
+			}
+			return solutions.length;
+		}
+		return 0;
+	}
+};
+
+self.addEventListener('message', function(e) {
+	var data = dlx.solve( e.data );
+	self.postMessage( data );
+}, false);
