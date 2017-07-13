@@ -1,0 +1,39 @@
+CREATE TABLE orders
+(
+    orderID SERIAL PRIMARY KEY NOT NULL,
+    items text[] NOT NULL
+);
+
+
+CREATE TABLE items
+(
+    id SERIAL PRIMARY KEY NOT NULL,
+    itemName varchar(100) NOT NULL,
+	itemPrice int NOT NULL,
+	inStock int NOT NULL,
+	itemImage varChar(100) NOT NULL
+);
+
+INSERT INTO orders(items) VALUES
+('{"Test1","Test2"}'),
+('{"Test3","Test2"}'),
+('{"Test2"}');
+
+
+CREATE TABLE users
+(
+    userID SERIAL PRIMARY KEY NOT NULL,
+    userName varchar(100) NOT NULL,
+	pword varchar(100) NOT NULL,
+	role int NOT NULL
+);
+
+
+CREATE TABLE user_order(
+	userID int REFERENCES users (userID) ON UPDATE CASCADE ON DELETE CASCADE
+,	orderID int REFERENCES orders (orderID) ON UPDATE CASCADE
+,	amount numeric NOT NULL DEFAULT 1
+,	 CONSTRAINT user_order_pkey PRIMARY KEY (userId, orderId)
+);
+
+
