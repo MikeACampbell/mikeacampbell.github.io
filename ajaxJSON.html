@@ -1,0 +1,137 @@
+!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<style>
+body 
+{
+    background-color: lightblue;
+}
+
+h1 
+{
+    color: white;
+    text-align: center;
+
+}
+
+h2
+{
+    color: white;
+    text-align: center;
+}
+
+
+
+p.linkToIndex
+{
+	font-family: verdana; 
+	text-align: center;
+	font-size: 12px;
+}
+
+.options
+{
+font-family: verdana; 
+	text-align: center;
+	font-size: 12px;
+	padding-bottom: 10px;
+
+}
+
+.output
+{   
+	margin: auto;
+    width: 20%;
+    padding: 10px;
+	font-size: 13px;
+	font-family: verdana; 
+	border: 1px solid black;
+}
+
+.outputJSON
+{   
+	margin: auto;
+    width: 20%;
+    padding: 10px;
+	font-size: 13px;
+	font-family: verdana; 
+}
+
+.inputFile
+{
+	width: 25%;
+	font-family: verdana;
+
+}
+
+.submit
+{
+
+font-family: verdana;
+
+}
+</style>
+
+<script>
+
+$.getJSON( "test.json", function( data ) {
+  var items = [];
+  $.each( data, function( key, val ) {
+    items.push( "<li id='" + key + "'>" + val + "</li>" );
+  });
+ 
+  $( "<ul/>", {
+    "class": "my-new-list",
+    html: items.join( "" )
+  }).appendTo( "body" );
+});
+/*
+function loadJson(){
+var fileName = "https://mikeacampbell.github.io/test.json";
+
+var xhttp = new XMLHttpRequest();
+xhttp.open("GET", fileName, true);
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+	  var myText = JSON.parse(this.responseText);
+	  document.getElementById("outputJSON").innerHTML = myText.one + ", " + myText.two + ", " + myText.three;
+		}
+	};	
+xhttp.send();
+
+}
+*/
+</script>
+
+<title>Ajax Loader</title>
+
+</head>
+
+<body>
+
+<hr>
+
+<h1>JSON Ajax Loader</h1>
+
+<div class = "options">
+
+<form id="frm1" class="fileInput">
+
+			
+		<button type="button" class = "submit" onclick="loadJson()">Load</button>
+
+</form>
+</div>
+
+<div id="outputJSON" class="outputJSON">
+</div>
+
+<hr>
+<p class="linkToIndex">
+<a href= "http://localhost/~mac4676/index.html">CS213 Assignments</a>
+</p>
+
+
+</body>
+</html>

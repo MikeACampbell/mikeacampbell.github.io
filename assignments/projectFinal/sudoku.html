@@ -12,11 +12,6 @@
 		padding:0px;
 		overflow:hidden;
 	}
-	#ad{
-		position:absolute;
-		top:600px;
-		left:10px;
-	}
 	h1{
 		margin-top:0px;
 		margin-bottom:5px;
@@ -65,6 +60,13 @@
 		border:2px solid #000;
 		
 	}
+	
+	
+	.sudokuSquare
+	{
+	font-size:30px;
+	}
+	
 	.sudokuSquare,.sudokuSquareHighlighted{
 		width:46px;
 		height:46px;
@@ -72,15 +74,16 @@
 		border:1px solid #000000;
 		padding:1px;
 		line-height:46px;
-		font-size:30px;
 		text-align:center;		
 		background-color:#FFF;
 		cursor:default;
+	
 	}
 	.sudokuSquareHighlighted{
 		border:2px solid #317082;
 		width:46px;
-		height:46px;		
+		height:46px;
+		font-size:10px;		
 		padding:0px;
 		background-color:#E2EBED;
 	}
@@ -119,6 +122,12 @@
 		padding:2px;
 		background-color:#FF0000;
 		color:#FFF;
+	}
+	
+	span.userInput{
+	
+	
+	
 	}
 	
 	</style>
@@ -220,13 +229,17 @@
 			
 		}
 	}
+	
+	//HERE
 	var higlightedCell;
 	function highlightSquare(e,inputObj){
 		document.getElementById('hintDiv').style.display='none';
 		if(!inputObj)inputObj = this;	
 		if(inputObj.style.backgroundColor)return;
 		if(gameFinished)return;
-		inputObj.className='sudokuSquareHighlighted';
+		
+		inputObj.className='sudokuSquareHighlighted'; 
+		
 		if(higlightedCell && higlightedCell!=inputObj)higlightedCell.className='sudokuSquare';
 		higlightedCell = inputObj;
 		if(document.all)inputObj.focus();
@@ -248,7 +261,7 @@
 				}
 			}	
 		}
-		
+			//put timer stop/save here.
 		if(allOk)alert('Congratulations! You did it');
 		
 	}
@@ -322,6 +335,7 @@
 				spanObjects[1].style.display = '';
 				spanObjects[1].style.color='#000';	
 
+				//add onClick
 				obj.onclick = highlightSquare;
 						
 				squareObjects.push(obj);						
@@ -404,13 +418,22 @@
 		
 		if(code==46 || code==8){	// Delete
 			span.innerHTML = '';
+			span.style.fontSize = "10px";
 			if(code==8)return false;
 		}
 		if(code>96 && code<=105)code-=48;
 		if(code>48 && code<=57){				
 			var theChar = String.fromCharCode(code);
-			span.innerHTML = theChar;
+			span.innerHTML = theChar; //Insert Number. I can maybe trigger transistion/animation here. 
+			span.style.fontSize = "30px";
+			span.style.webkitTransform = "scale(1)";
+			span.style.msTransform = "scale(1)";
+			span.style.Transform = "scale(1)";
+			span.style.webkitTransition = ".2s ease-out";
+			span.style.msTransition = ".2s ease-out";
+			span.style.Transition = ".2s ease-out";
 		}		
+		
 		
 		isGameFinished();
 	}	
@@ -557,7 +580,8 @@
 		
 	}
 	
-	
+
+//transistions	
 	function revealAll()
 	{
 		for(var row=0;row<9;row++){
@@ -633,6 +657,6 @@
 
 </div>
 <div id="hintDiv"><div id="hintDivInner"></div></div>
-<div id="debug""></div>
+<div id="numberInput"></div>
 </body>
 </html>
