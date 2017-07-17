@@ -243,8 +243,11 @@
 		}
 	}
 	
-	//HERE
+
 	var higlightedCell;
+
+	//Oh hey add some fancy things, make it cool 
+	
 	function highlightSquare(e,inputObj){
 		document.getElementById('hintDiv').style.display='none';
 		if(!inputObj)inputObj = this;	
@@ -274,13 +277,18 @@
 				}
 			}	
 		}
+
 			//put timer stop/save here.
+
+		//Stop Timer
+		
+
 		if(allOk)alert('Congratulations! You did it');
 		
 	}
 	
 	function initSudoku()
-	{
+	{	//start timer
 		gameFinished = false;
 		document.getElementById('hintDiv').style.display='none';
 		var matrix = new Array();
@@ -363,6 +371,9 @@
 		newGame();
 		shuffleBoard();
 	}
+	
+	
+	
 	function insertNumber(e)
 	{
 		document.getElementById('hintDiv').style.display='none';
