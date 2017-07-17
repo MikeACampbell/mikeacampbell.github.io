@@ -21,12 +21,12 @@
 	#sudoku{
 		position:absolute;
 		left:10px;
-		top:130px;
+		top:100px;
 	}
 	#gameOptions{
 		position:absolute;
 		left:500px;
-		top:130px;
+		top:100px;
 		width:150px;
 		height:450px;
 		border:4px solid #000;
@@ -35,6 +35,19 @@
 		font-size:0.9em;
 	}
 
+	#numberInput{
+		position:absolute;
+		left:10px;
+		top:570px;
+		width:450px;
+		height:50px;
+		border:4px solid #000;
+		background-color:#E2EBED;
+		padding-left:5px;
+		font-size:0.9em;
+	}
+	
+	
 	#gameOptions ul{
 		padding-left:0px;
 		margin-left:0px;
@@ -353,7 +366,14 @@
 	function insertNumber(e)
 	{
 		document.getElementById('hintDiv').style.display='none';
-
+		
+		//This is a patch job, to get my button interface working
+		//As on mobile, there is no other way to get the system working.
+		if (e.keycode == undefined)
+		{
+			code = e;
+			
+		}
 		if(document.all)e = event;
 		if(!higlightedCell)return;
 		if(gameFinished)return;
@@ -424,7 +444,7 @@
 		if(code>96 && code<=105)code-=48;
 		if(code>48 && code<=57){				
 			var theChar = String.fromCharCode(code);
-			span.innerHTML = theChar; //Insert Number. I can maybe trigger transistion/animation here. 
+			span.innerHTML = theChar;  
 			span.style.fontSize = "30px";
 			span.style.webkitTransform = "scale(1)";
 			span.style.msTransform = "scale(1)";
