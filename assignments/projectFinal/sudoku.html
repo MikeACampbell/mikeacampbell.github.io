@@ -1,16 +1,19 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Sudoku</title>
+
+<title>Sudoku</title>
 	
-	<style type="text/css">
+<style type="text/css">
 	body{
 		font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
-		width:100%;
 		height:100%;
-		margin:0px;
+		width:80%;
+        margin-left:auto;
+        margin-right:auto;
 		padding:0px;
 		overflow:hidden;
+		
 	}
 	h1{
 		margin-top:0px;
@@ -33,9 +36,11 @@
 		background-color:#E2EBED;
 		padding-left:5px;
 		font-size:0.9em;
+		border-radius: 20px;
 	}
-
+	
 	#numberInput{
+	
 		position:absolute;
 		left:10px;
 		top:570px;
@@ -45,23 +50,47 @@
 		background-color:#E2EBED;
 		padding-left:5px;
 		font-size:30px;
+		border-radius:10px;
+		overflow:hidden;
+		display: none;
+		
 	}
 	
 	#numberToInput
 	{
-		
 		display: inline-block;
-		margin-right: -2px;
-		border:1px solid #317082;
-		width:43px;
+		margin-right: -2.5px;
+		margin-left: -2.5px;
+		margin-top: -0.5px;
+		width:46px;
 		height:46px;		
 		padding:0px;
 		line-height:46px;
 		font-size:25px;
-		text-align:center
+		text-align:center;
+		border-right: 2px solid #000;
+		border-left: 2px solid #000;
+		border-top: 1px solid #000;
+		border-bottom: 1px solid #000;
+		
+	
+	}
+
+
+	
+	@-webkit-keyframes celebration {
+		from {background-color: #FFFF;}
+		to  {background-color: #E2EBED;}
+	
 	
 	}
 	
+	@keyframes celebration {
+		from {background-color: #FFFF;}
+		to  {background-color: #E2EBED;}
+	
+	
+	}
 	
 	#gameOptions ul{
 		padding-left:0px;
@@ -86,7 +115,7 @@
 		width:456px;
 		height:456px;
 		border:2px solid #000;
-		
+		display: None;
 	}
 	
 	
@@ -104,7 +133,14 @@
 		line-height:46px;
 		text-align:center;		
 		background-color:#FFF;
-		cursor:default;
+		animation-name: celebration;
+		animation-duration: 1s;
+		animation-iteration-count: infinite;
+		-webkit-animation-name: celebration;
+		-webkit-animation-duration: 1s;
+		-webkit-animation-iteration-count: infinite;
+		animation-play-state: paused;
+		
 	
 	}
 	.sudokuSquareHighlighted{
@@ -114,6 +150,7 @@
 		font-size:10px;		
 		padding:0px;
 		background-color:#E2EBED;
+		
 	}
 	
 	.sudokuSection{
@@ -140,6 +177,7 @@
 		
 		
 	}
+	
 	#hintDivInner{
 		width:44px;
 		height:44px;
@@ -155,7 +193,14 @@
 	
 	</style>
 	<script type="text/javascript">
-			
+	
+	var seconds = 00;
+	var minutes = 00;
+	var paused = true;
+	var Interval;
+	var topSeconds = "00";
+	var topMinutes = "00";
+	
 	var squareObjects = new Array();
 	var level = 1;	// 1 is lowest level
 	var countSquares = [36,36,34,32,31,30];
@@ -196,6 +241,8 @@
 	
 	function newGame()
 	{
+		
+
 		var obj = document.getElementById('sudoku');
 		var subObjects = obj.getElementsByTagName('DIV');
 		for(var no=0;no<subObjects.length;no++){
@@ -206,7 +253,7 @@
 				spans[1].innerHTML = '';
 			}
 		}	
-		
+			//Pull back hider
 	}
 	
 	var visibleNumberArray = new Array();
@@ -256,7 +303,7 @@
 
 	var higlightedCell;
 
-	//Oh hey add some fancy things, make it cool 
+	
 	
 	function highlightSquare(e,inputObj){
 		document.getElementById('hintDiv').style.display='none';
@@ -269,6 +316,8 @@
 		if(higlightedCell && higlightedCell!=inputObj)higlightedCell.className='sudokuSquare';
 		higlightedCell = inputObj;
 		if(document.all)inputObj.focus();
+		
+		//Pull down num menu
 		
 	}
 	
@@ -287,20 +336,187 @@
 				}
 			}	
 		}
-
-			//put timer stop/save here.
-
-		//Stop Timer
 		
-
-		if(allOk)alert('Congratulations! You did it');
+		if(allOk)
+		{	clearInterval(Interval);
+			
+			
+			if (typeof(Storage) !== "undefined") {
+					if(level == 1)
+					{
+						localStorage.easySecs = seconds;
+						localStorage.easyMins = minutes;
+					}
+					else if(level == 2)
+					{
+						localStorage.modSecs = seconds;
+						localStorage.modMins = minutes;
+					
+					}
+					else if(level == 3)
+					{
+						localStorage.hardSecs = seconds;
+						localStorage.hardMins = minutes;
+					}
+					else if(level == 4)
+					{
+						localStorage.expertSecs = seconds;
+						localStorage.expertMins = minutes;
+					}
+					else
+					{
+					
+						console.log("Either you changed the var with the console or you broke it");
+					
+					}
+			} else {
+   
+		}
+			
+			
+			alert('Congratulations! You did it');
+		
+			var sum;
+			for(var row=0;row<9;row++){
+				for(var col=0;col<9;col++){
+					var obj =document.getElementById('square_'+row+'_'+col);
+					var spans = obj.getElementsByTagName('SPAN');
+					spans[0].style.display='';
+					spans[0].style.color='#000000';
+					obj.style.backgroundColor = '';			
+					spans[1].style.display='none';	
+					spans[1].style.color='#000000';	
+					
+					sum = row + col;
+					if(isEven(sum))
+					{				
+						obj.style.animationPlayState = "running";
+					}					
+				
+				}
+			}
+		}
+		
 		
 	}
 	
 	function initSudoku()
-	{	//start timer
+	{	beginTimer();
 		gameFinished = false;
+		//I check first what level, but then if the local storage is defiend. 
+		if(level == 1)
+		{
+				if (localStorage.esaySecs === 'undefined')
+				{
+					document.getElementById("topSeconds").innerHTML = "00"
+					document.getElementById("topMinutes").innerHTML = "00"
+				
+				}
+				else if(localStorage.easySecs <= 9){
+					document.getElementById("topSeconds").innerHTML = "0" + localStorage.easySecs;
+				}
+    
+				else if (localStorage.easySecs > 9){
+					document.getElementById("topSeconds").innerHTML = localStorage.easySecs;
+				}
+	
+				else if (localStorage.easyMins < 9 && localStorage.easyMins > 0) { 
+					 document.getElementById("topMinutes").innerHTML = "0" + localStorage.easyMins;
+					 
+				}
+				else if (localStorage.easyMins > 9){
+				  document.getElementById("topMinutes").innerHTML = localStorage.easyMins;
+				}
+	
+			}
+		else if(level == 2)
+		{
+			if (localStorage.modSecs == undefined)
+			{
+				document.getElementById("topSeconds").innerHTML = "00"
+				document.getElementById("topMinutes").innerHTML = "00"
+			
+			}
+			
+			else if(localStorage.modSecs <= 9){
+				document.getElementById("topSeconds").innerHTML = "0" + localStorage.modSecs;
+			}
+
+			else if (localStorage.modSecs > 9){
+				document.getElementById("topSeconds").innerHTML = localStorage.modSecs;
+			}
+
+			else if (localStorage.modSecs < 9 && localStorage.modSecs > 0) { 
+				 document.getElementById("topMinutes").innerHTML = "0" + localStorage.modMins;
+				 
+			}
+			else if (localStorage.modSecs > 9){
+			  document.getElementById("topMinutes").innerHTML = localStorage.modMins;
+			}
+		
+		}
+		else if(level == 3)
+		{
+			
+			if (localStorage.hardSecs == undefined)
+			{
+				document.getElementById("topSeconds").innerHTML = "00"
+				document.getElementById("topMinutes").innerHTML = "00"
+			
+			}
+			
+			else if(localStorage.modSecs <= 9){
+				document.getElementById("topSeconds").innerHTML = "0" + localStorage.hardSecs;
+			}
+
+			else if (localStorage.modSecs > 9){
+				document.getElementById("topSeconds").innerHTML = localStorage.hardSecs;
+			}
+
+			else if (localStorage.hardMins < 9 && localStorage.modSecs > 0) { 
+				 document.getElementById("topMinutes").innerHTML = "0" + localStorage.hardMins;
+				 
+			}
+			else if (localStorage.hardMins > 9){
+			  document.getElementById("topMinutes").innerHTML = localStorage.hardMins;
+			}
+		}
+		else if(level == 4)
+		{
+			if (localStorage.hardSecs == undefined)
+			{
+				document.getElementById("topSeconds").innerHTML = "00"
+				document.getElementById("topMinutes").innerHTML = "00"
+			
+			}
+			
+			else if(localStorage.expertSecs <= 9){
+				document.getElementById("topSeconds").innerHTML = "0" + localStorage.expertSecs;
+			}
+
+			else if (localStorage.expertSecs > 9){
+				document.getElementById("topSeconds").innerHTML = localStorage.expertSecs;
+			}
+
+			else if (localStorage.expertMins < 9 && localStorage.modSecs > 0) { 
+				 document.getElementById("topMinutes").innerHTML = "0" + localStorage.expertMins;
+				 
+			}
+			else if (localStorage.expertMins > 9){
+			  document.getElementById("topMinutes").innerHTML = localStorage.expertMins;
+			}
+		}
+		else
+		{
+		
+			console.log("Either you changed the var with the console or you broke it");
+		
+		}
+		
+		
 		document.getElementById('hintDiv').style.display='none';
+		document.getElementById('sudoku').style.display='block';
+		document.getElementById('numberInput').style.display='block';
 		var matrix = new Array();
 		for(var rowCounter=0;rowCounter<9;rowCounter++){
 			matrix[rowCounter] = new Array();
@@ -357,7 +573,7 @@
 			for(var no2=0;no2<matrix[no].length;no2++){				
 				var obj = document.getElementById('square_' + no + '_' + no2);
 				var spanObjects = obj.getElementsByTagName('SPAN');
-				
+				obj.style.animationPlayState = "paused";
 				var span = spanObjects[0];
 				span.innerHTML = matrix[no][no2];		
 				span.style.display='none';
@@ -392,7 +608,7 @@
 		document.getElementById('hintDiv').style.display='none';
 		
 		//This is a patch job, to get my button interface working
-		//As on mobile, there is no other way to get the system working.
+		//As I would have rebuild my code. 
 		if (e.keycode == undefined)
 		{
 			code = e;
@@ -468,19 +684,56 @@
 		if(code>96 && code<=105)code-=48;
 		if(code>48 && code<=57){				
 			var theChar = String.fromCharCode(code);
-			span.innerHTML = theChar;  
-			span.style.fontSize = "30px";
-			span.style.webkitTransform = "scale(1)";
-			span.style.msTransform = "scale(1)";
-			span.style.Transform = "scale(1)";
-			span.style.webkitTransition = ".2s ease-out";
-			span.style.msTransition = ".2s ease-out";
-			span.style.Transition = ".2s ease-out";
+		
+			if(span.innerHTML != '') //Likely not the best way to implement, but this empties the span and then reverses the transisition
+			{						//Then uses setTimeout to wait a fraction of a second for the animation reverse.
+					span.innerHTML = '';
+					span.style.fontSize = '10px';
+				setTimeout(function (){
+					span.innerHTML = theChar; 
+					span.style.webkitTransform = 'scale(1)';
+					span.style.msTransform = 'scale(1)';
+					span.style.Transform = 'scale(1)';
+					span.style.webkitTransition = '.2s ease-out';
+					span.style.msTransition = '.2s ease-out';
+					span.style.Transition = '.2s ease-out';
+					span.style.fontSize = '30px';
+				
+				
+				}, 75);
+				
+				
+				
+			}
+		
+			else {
+				span.innerHTML = theChar;  
+				
+				
+				span.style.webkitTransform = 'scale(1)';
+				span.style.msTransform = 'scale(1)';
+				span.style.Transform = 'scale(1)';
+				span.style.webkitTransition = '.2s ease-out';
+				span.style.msTransition = '.2s ease-out';
+				span.style.Transition = '.2s ease-out';
+				span.style.fontSize = '30px';
+			
+			}
 		}		
 		
 		
 		isGameFinished();
 	}	
+	
+	function emptyCell(cellObj)
+	{
+	
+	cellObj.style.fontSize = '10px'; 
+	cellObj.style.webkitTransition = 'none';
+
+	cellObj.innerHTML = '';
+
+}
 	
 	function helpMe()
 	{
@@ -625,40 +878,78 @@
 	}
 	
 
-//transistions	
+	
 	function revealAll()
 	{
+
 		for(var row=0;row<9;row++){
 			for(var col=0;col<9;col++){
 				var obj =document.getElementById('square_'+row+'_'+col);
 				var spans = obj.getElementsByTagName('SPAN');
-				spans[0].style.display='';
+				spans[0].style.display='';		
 				spans[1].style.display='none';	
 				spans[1].style.color='#000000';	
+								
 			}
 		}
-		gameFinished=true;
+		
+		//gameFinished=true;
 	}
+	
+	function isEven(n) {
+   
+	return n % 2;
+	
+	}
+	
 	
 	function switchLevel(initLevel,linkObj)
-	{
-		var confirmSwitch = gameFinished;
-		if(!confirmSwitch)confirmSwitch = confirm('Click OK to end current game and start anew.');
-		if(confirmSwitch){
-			var parentObj = linkObj.parentNode.parentNode;
-			var links = parentObj.getElementsByTagName('A');
-			for(var no=0;no<links.length;no++){
-				links[no].style.fontWeight='normal';
-			}
-			linkObj.style.fontWeight = 'bold';
-			level = initLevel;
-			setTimeout('initSudoku()',20);		
+	{	
+		var parentObj = linkObj.parentNode.parentNode;
+		var links = parentObj.getElementsByTagName('A');
+		for(var no=0;no<links.length;no++){
+			links[no].style.fontWeight='normal';
 		}
+		linkObj.style.fontWeight = 'bold';
+		level = initLevel;
+		setTimeout('initSudoku()',20);		
+		
 	}
 	
-
+	function beginTimer() {
+	paused = false;
+    clearInterval(Interval);
+	minutes = "00";
+    seconds = "00";
+	document.getElementById("seconds").innerHTML = '00';
+	document.getElementById("seconds").innerHTML = '00';
+    Interval = setInterval(startTimer, 1000);
+	}
 	
-	window.onload = initSudoku;
+	function startTimer()
+	{
+		seconds++;
+		
+	if(seconds <= 9){
+      document.getElementById("seconds").innerHTML = "0" + seconds;
+    }
+    
+    if (seconds > 9){
+      document.getElementById("seconds").innerHTML = seconds;
+    }
+	
+	if (seconds > 59) {
+      minutes++;
+      document.getElementById("minutes").innerHTML = "0" + minutes;
+      seconds = 0;
+      document.getElementById("seconds").innerHTML = "0" + 0;
+    }
+    if (minutes > 9){
+      document.getElementById("minutes").innerHTML = minutes;
+    }
+  }
+	
+	
 	</script>
 </head>
 <body>
@@ -685,21 +976,27 @@
 
 </div>
 <div id="gameOptions">
+
 	<h1>Sudoku</h1>
 
 	<ul>
+		<li><p>Timer: <span id="minutes">00</span> : <span id="seconds">00</span></p></li>
+		<li><p>Top Time: <span id="topMinutes">00</span> : <span id="topSeconds">00</span></p></li>
 		<li><a href="#" onclick="revealAll();return false">Reveal numbers</a></li>
 		<li><a href="#" onclick="initSudoku();return false">New game</a></li>
 		<li><a href="#" onclick="showHint();return false">Show hint</a></li>
 	</ul>
+	
 	<ul>
-		<li><a href="#" onclick="switchLevel(1,this);return false" style="font-weight:bold">Beginner</a></li>
+		<li><a href="#" onclick="switchLevel(1,this);return false">Beginner</a></li>
 		<li><a href="#" onclick="switchLevel(2,this);return false">Moderate</a></li>
 		<li><a href="#" onclick="switchLevel(3,this);return false">Hard</a></li>
 		<li><a href="#" onclick="switchLevel(4,this);return false">Expert</a></li>
 	</ul>
 
 </div>
+<div id="gameCover"></div>
+
 <div id="hintDiv"><div id="hintDivInner"></div></div>
 
 <div id="numberInput">
